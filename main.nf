@@ -160,7 +160,7 @@ workflow BTPAIRED {
     
     }
 
-    ch_genome   = channel.value(genomeDir[params.genome])
+    ch_genome   = channel.value(genomeDir[params.genome]).view()
     ch_alias    = channel.value(gAlias[params.genome])
     ch_gtf      = channel.value(gtfs[params.genome])
     ch_blkList  = channel.value(blkList[params.genome])
