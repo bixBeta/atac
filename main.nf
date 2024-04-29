@@ -14,7 +14,7 @@ params.fastp            = false
 // Default Params:
 params.mode             = "PE"
 params.id               = "TREx_ID"
-params.fecutoff        = 5
+params.fecutoff         = 5
 params.qval             = 0.05
 params.genome           = null
 
@@ -26,6 +26,10 @@ ch_pin          =    channel.value(params.id)
 ch_sheet        =    channel.fromPath(params.sheet)
 ch_qval         =    channel.value(params.qval)
 ch_fe           =    channel.value(params.fecutoff)
+ch_mqc_conf     =    channel.fromPath("${projectDir}/multiqc_config.yaml")
+ch_mqc_logo     =    channel.fromPath("${projectDir}/img/trex-mini.png")
+
+
 
 // ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ 
 
@@ -129,9 +133,9 @@ if( params.listGenomes) {
 // Load all modules 
 
 include {    FASTPM    } from './modules/fastp'
-// include {    BOWTIE2M  } from './modules/bowtie2'
-
-
+include {    BOWTIE2M  } from './modules/bowtie2'
+include {    MQC       } from '.modules/multiqc'
+ 
 
 
 
@@ -156,10 +160,44 @@ workflow BTPAIRED {
     
     }
 
+    ch_genome   = channel.value(genomeDir[params.genome])
+    ch_alias    = channel.value(gAlias[params.genome])
+    ch_gtf      = channel.value(gtfs[params.genome])
+    ch_blkList  = channel.value(blkList[params.genome])
+
+    if( params.bowtie2){
+
+        BOWTIE2M(fastp_out, ch_genome)
+
+    }
+
+    if( params.genome != null ){
+
+        ch1_mqc = BOWTIE2M.out.primary_log
+                        .concat(BOWTIE2M.out.primary_flagstat)
+                        .concat(BOWTIE2M.out.primary_idxstats)
+                        .collect()
+                        .view()
+
+        MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
+
+    }
+
+}
 
 
+workflow {
+
+    if (params.mode == "PE" ) {
+
+        BTPAIRED()
+
+    } else {
 
 
+        error "Invalid Workflow"
+        exit 0 
+    }
 
 
 }

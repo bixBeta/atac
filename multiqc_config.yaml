@@ -1,0 +1,8 @@
+data_format: 'yaml'
+
+report_header_info:
+  - Contact E-mail: 'trex_info@cornell.edu'
+  - Reference Genome: !ENV "${MQC_GENOME}"
+custom_logo_url: https://trex.biotech.cornell.edu/
+plots_force_interactive: True
+
