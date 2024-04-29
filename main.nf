@@ -66,7 +66,7 @@ Args:
 genomeDir = [
 
 mm10            :"/workdir/genomes/Mus_musculus/mm10/ENSEMBL/bowtie2index/mm10",
-hg38            :"/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/BT2.ENSEMBL_INDEX/hg38",
+hg38            :"/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/BT2.ENSEMBL_INDEX/",
 dm6             :"/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Bowtie2.Index/dm6"
 
 ]
@@ -162,7 +162,7 @@ workflow BTPAIRED {
 
     genome = genomeDir[params.genome]
     ch_genome   = channel.value(genome)
-    
+
     ch_alias    = channel.value(gAlias[params.genome])
     ch_gtf      = channel.value(gtfs[params.genome])
     ch_blkList  = channel.value(blkList[params.genome])
