@@ -7,7 +7,7 @@ process BOWTIE2M {
     tag "$id"
     label "process_high"
 
-    publishDir "primary_BAMS", mode: "symlink", overwrite: true, pattern: "*.bam"
+    publishDir "primary_BAMS", mode: "symlink", overwrite: true, pattern: "*.bam*"
 
     input:
         tuple val(id), path(trimmed)
