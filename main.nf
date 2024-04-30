@@ -135,7 +135,7 @@ if( params.listGenomes) {
 include {    FASTP     } from './modules/fastp'
 include {    BOWTIE2   } from './modules/bowtie2'
 include {    MTBLKDUP  } from './modules/bowtie2'
-
+include {    TAGDIR    } from './modules/homer'
 include {    MQC       } from './modules/multiqc'
  
 
