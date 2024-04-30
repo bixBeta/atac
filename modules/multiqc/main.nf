@@ -5,6 +5,7 @@ process MQC {
     label 'process_mqc'
     
     publishDir "Reports", mode: "move", overwrite: true
+    
     input:
 
         path "*"
@@ -12,7 +13,7 @@ process MQC {
         path(logo)             
 
     output:
-        path "*html"                    , emit: "mqc_out"  
+        path "*html"                    , emit: mqc_out  
 
     when:
         
@@ -32,6 +33,7 @@ process MQC2 {
     label 'process_mqc'
     
     publishDir "Reports", mode: "move", overwrite: true
+
     input:
 
         path "*"
@@ -39,7 +41,7 @@ process MQC2 {
         path(logo)             
 
     output:
-        path "*html"                    , emit: "mqc2_out"  
+        path "*html"                    , emit: mqc_out2 
 
     when:
         
