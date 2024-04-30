@@ -193,8 +193,6 @@ workflow BTPAIRED {
                          .view()
     
 
-    if (params.bg != null ){
-
         ch_bg = ch_dedup_bams
                     .filter{ it[0] == params.bg}
         
@@ -206,7 +204,7 @@ workflow BTPAIRED {
 
         MACS2(ch_atac_bams, ch_bg , ch_qval, ch_fe, ch_gsize)
 
-    }
+
 
     }
 
