@@ -103,7 +103,6 @@ process MTBLKDUP {
                     VALIDATION_STRINGENCY=LENIENT \\
                     TMP_DIR=tmp
 
-            sed 's\/${id}.noMT.noBL.bam/${id}.noMT.noBL.dupMarked.bam\/g' ${id}.MarkDuplicates.metrics.txt   > ${id}.renamed.MarkDuplicates.metrics.txt 
 
             samtools index ${id}.noMT.noBL.dupMarked.bam
             samtools flagstat ${id}.noMT.noBL.dupMarked.bam > ${id}.noMT.noBL.dupMarked.flagstat
