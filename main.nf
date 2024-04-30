@@ -189,8 +189,8 @@ workflow BTPAIRED {
                         .concat(MTBLKDUP.out.nomt_nobl_dupmarked_flagstat)
                         .concat(MTBLKDUP.out.nomt_nobl_dupmarked_idxstats)
                         .concat(MTBLKDUP.out.dup_stats)
-                        .concat(MTBLKDUP.out.dedup.flagstat)
-                        .concat(MTBLKDUP.out.dedup.idxstats)
+                        .concat(MTBLKDUP.out.dedup_flagstat)
+                        .concat(MTBLKDUP.out.dedup_idxstats)
                         .collect()
                         .view()
 
