@@ -54,8 +54,8 @@ process MTBLKDUP {
     publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*stat*"
  
     input:
-        tuple val(id), path(primary_bam)
-        tuple val(id), path(primary_bai)
+        tuple val(id), path(primaryBam)
+        tuple val(id), path(primaryBai)
         path(blacklist)
 
     output:
