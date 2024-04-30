@@ -146,6 +146,7 @@ include {    MTBLKDUP  } from './modules/bowtie2'
 include {    TAGDIR    } from './modules/homer'
 include {    MACS2     } from './modules/macs2'
 include {    MACS2ALL  } from './modules/macs2'
+include {    FRIP      } from './modules/macs2'
 include {    MQC       } from './modules/multiqc'
  
 
