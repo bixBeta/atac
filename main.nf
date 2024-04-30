@@ -132,8 +132,8 @@ if( params.listGenomes) {
 
 // Load all modules 
 
-include {    FASTPM    } from './modules/fastp'
-include {    BOWTIE2M  } from './modules/bowtie2'
+include {    FASTP     } from './modules/fastp'
+include {    BOWTIE2   } from './modules/bowtie2'
 include {    MQC       } from './modules/multiqc'
  
 
@@ -151,7 +151,7 @@ workflow BTPAIRED {
     
     if( params.fastp ){
 
-        FASTPM(meta_ch)
+        FASTP(meta_ch)
             .set { fastp_out }
     
     } else {
@@ -169,15 +169,15 @@ workflow BTPAIRED {
 
     if( params.bowtie2){
 
-        BOWTIE2M(fastp_out, ch_genome)
+        BOWTIE2(fastp_out, ch_genome)
 
     }
 
     if( params.genome != null ){
 
-        ch1_mqc = BOWTIE2M.out.primary_log
-                        .concat(BOWTIE2M.out.primary_flagstat)
-                        .concat(BOWTIE2M.out.primary_idxstats)
+        ch1_mqc = BOWTIE2.out.primary_log
+                        .concat(BOWTIE2.out.primary_flagstat)
+                        .concat(BOWTIE2.out.primary_idxstats)
                         .collect()
                         .view()
 

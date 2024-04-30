@@ -1,13 +1,15 @@
 aligner = params.bowtie2
 gkey    = params.genome
 
-process BOWTIE2M {
+process BOWTIE2 {
 
     maxForks 6
     tag "$id"
     label "process_high"
 
     publishDir "primary_BAMS", mode: "symlink", overwrite: true, pattern: "*.bam*"
+    publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*stat*"
+    publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*log"
 
     input:
         tuple val(id), path(trimmed)
@@ -42,3 +44,68 @@ process BOWTIE2M {
 
 
 }
+
+process MTBLKDUP {
+
+    maxForks 8
+    tag "$id"
+    label "process_medium"
+
+    publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*stat*"
+ 
+    input:
+        tuple val(id), path(primary_bam)
+        tuple val(id), path(primary_bai)
+        path(blacklist)
+
+    output:
+        tuple val(id), path("*.noMT.bam")                           , emit: "nomt_bam"
+        tuple val(id), path("*.noMT.bai")                           , emit: "nomt_bai"
+        path("*.noMT.flagstat")                                     , emit: "nomt_flagstat"
+        path("*.noMT.idxstats")                                     , emit: "nomt_idxstats"
+        
+        tuple val(id), path("*.noMT.noBL.bam")                      , emit: "nomt_nobl_bam"
+        tuple val(id), path("*.noMT.noBL.bai")                      , emit: "nomt_nobl_bai"
+        path("*.noMT.noBL.flagstat")                                , emit: "nomt_nobl_flagstat"
+        path("*.noMT.noBL.idxstats")                                , emit: "nomt_nobl_idxstats"
+
+        tuple val(id), path("*.noMT.noBL.dupMarked.bam")            , emit: "dupmarked_bam"
+        tuple val(id), path("*.noMT.noBL.dupMarked.bai")            , emit: "dupmarked_bai"
+        path("*.noMT.noBL.dupMarked.flagstat")                      , emit: "nomt_nobl_dupmarked_flagstat"
+        path("*.noMT.noBL.dupMarked.idxstats")                      , emit: "nomt_nobl_dupmarked_idxstats"        
+
+        path("*.MarkDuplicates.metrics.txt")                        , emit: "dup_stats"
+
+    script:
+
+        """
+            samtools view -H ${primary_bam} | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b ${primary_bam} > ${id}.noMT.bam
+
+            samtools index ${id}.noMT.bam
+            samtools flagstat ${id}.noMT.bam > ${id}.noMT.flagstat
+            samtools idxstats ${id}.noMT.bam > ${id}.noMT.idxstats
+
+
+            bedtools intersect -v -a ${id}.noMT.bam -b ${blacklist} > ${id}.noMT.noBL.bam
+
+            samtools flagstat ${id}.noMT.noBL.bam > ${id}.noMT.noBL.flagstat
+            samtools idxstats ${id}.noMT.noBL.bam > ${id}.noMT.noBL.idxstats
+
+            java -jar /myBin/picard.jar \
+                    MarkDuplicates \
+                    INPUT=${id}.noMT.noBL.bam \
+                    OUTPUT=${id}.noMT.noBL.dupMarked.bam \
+                    ASSUME_SORTED=true \
+                    REMOVE_DUPLICATES=false \
+                    METRICS_FILE=${id}.MarkDuplicates.metrics.txt \
+                    VALIDATION_STRINGENCY=LENIENT \
+                    TMP_DIR=tmp
+
+            samtools index ${id}.noMT.noBL.dupMarked.bam
+            samtools flagstat ${id}.noMT.noBL.dupMarked.bam > ${id}.noMT.noBL.dupMarked.flagstat
+            samtools idxstats ${id}.noMT.noBL.dupMarked.bam > ${id}.noMT.noBL.dupMarked.idxstats
+
+        """
+
+}
+

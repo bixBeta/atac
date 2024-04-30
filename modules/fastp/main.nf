@@ -1,6 +1,6 @@
 runmode = params.mode
 
-process FASTPM {
+process FASTP {
     maxForks 8
     tag "$id"
     label 'process_high'
