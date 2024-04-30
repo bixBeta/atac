@@ -68,7 +68,7 @@ process MACS2ALL {
             path("*narrowPeak")                                 , emit: "all_narrow_peaks"
             path("*_peaks.xls")                                 , emit: "all_peaks_xls"
             path("*_summits.bed")                               , emit: "all_summits_bed"
-        
+            path("*.saf")                                       , emit: "saf"
         script:
 
             b = atac_bam.join(' ')
@@ -84,6 +84,9 @@ process MACS2ALL {
                     --nolambda \\
                     -c ${bg_control}
 
+            awk 'BEGIN{FS=OFS="\\t"; print "GeneID\\tChr\\tStart\\tEnd\\tStrand"}{print \$4, \$1, \$2+1, \$3, "."}' allSamplesMergedPeakset_peaks.narrowPeak > allSamplesMergedPeakset.saf
+
             """
 
 }
+
