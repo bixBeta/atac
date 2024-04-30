@@ -1,7 +1,7 @@
 process TAGDIR {
 
     maxForks 8 
-    tag $id
+    tag "$id"
     label "process_medium"
 
     input:
