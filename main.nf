@@ -178,6 +178,9 @@ workflow BTPAIRED {
                  ch_blkList)
         
         TAGDIR(MTBLKDUP.out.dedup_bam)
+
+        ch_dedup_bams = MTBLKDUP.out.dedup_bam
+                         .view()
     }
 
     if( params.genome != null ){

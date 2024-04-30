@@ -51,7 +51,7 @@ process MTBLKDUP {
     tag "$id"
     label "process_medium"
 
-    publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*stat*"
+    publishDir "STATS",             mode: "symlink", overwrite: true, pattern: "*stat*"
     publishDir "DEDUP_BAMS",        mode: "symlink", overwrite: true, pattern: "*DEDUP.bam*"
 
     input:
