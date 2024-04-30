@@ -184,11 +184,13 @@ workflow BTPAIRED {
         ch1_mqc = BOWTIE2.out.primary_log
                         .concat(BOWTIE2.out.primary_flagstat)
                         .concat(BOWTIE2.out.primary_idxstats)
-                        .concat(MTBLKDUP.out.nomt_flagstat)
-                        .concat(MTBLKDUP.out.nomt_idxstats)
+                        // .concat(MTBLKDUP.out.nomt_flagstat)
+                        // .concat(MTBLKDUP.out.nomt_idxstats)
                         .concat(MTBLKDUP.out.nomt_nobl_dupmarked_flagstat)
                         .concat(MTBLKDUP.out.nomt_nobl_dupmarked_idxstats)
                         .concat(MTBLKDUP.out.dup_stats)
+                        .concat(MTBLKDUP.out.dedup.flagstat)
+                        .concat(MTBLKDUP.out.dedup.idxstats)
                         .collect()
                         .view()
 

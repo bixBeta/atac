@@ -52,7 +52,8 @@ process MTBLKDUP {
     label "process_medium"
 
     publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*stat*"
- 
+    publishDir "DEDUP_BAMS",        mode: "symlink", overwrite: true, pattern: "*DEDUP.bam*"
+
     input:
         tuple val(id), path(primary_bam)
         tuple val(id), path(primary_bai)
@@ -75,7 +76,11 @@ process MTBLKDUP {
         path("*.noMT.noBL.dupMarked.idxstats")                      , emit: "nomt_nobl_dupmarked_idxstats"        
 
         path("*.MarkDuplicates.metrics.txt")                        , emit: "dup_stats"
-    //  path("*.renamed.MarkDuplicates.metrics.txt")                , emit: "dup_stats"
+
+        tuple val(id), path("*DEDUP.bam")                            , emit: "dedup_bam"
+        tuple val(id), path("*DEDUP.bam.bai")                        , emit: "dedup_bai"
+        path("*.DEDUP.flagstat")                                     , emit: "dedup_flagstat"
+        path("*.DEDUP.idxstats")                                     , emit: "dedup_idxstats"
 
     script:
 
@@ -111,7 +116,15 @@ process MTBLKDUP {
             samtools flagstat ${id}.noMT.noBL.dupMarked.bam > ${id}.noMT.noBL.dupMarked.flagstat
             samtools idxstats ${id}.noMT.noBL.dupMarked.bam > ${id}.noMT.noBL.dupMarked.idxstats
 
+
+            samtools view -b -h -F 0X400 ${id}.noMT.noBL.dupMarked.bam > ${id}.DEDUP.bam
+
+            samtools index ${id}.DEDUP.bam
+            samtools flagstat ${id}.DEDUP.bam > ${id}.DEDUP.flagstat
+            samtools idxstats ${id}.DEDUP.bam > ${id}.DEDUP.idxstats
+
         """
 
 }
+
 
