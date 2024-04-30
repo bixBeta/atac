@@ -60,17 +60,17 @@ process MTBLKDUP {
 
     output:
         tuple val(id), path("*.noMT.bam")                           , emit: "nomt_bam"
-        tuple val(id), path("*.noMT.bai")                           , emit: "nomt_bai"
+        tuple val(id), path("*.noMT.bam.bai")                           , emit: "nomt_bai"
         path("*.noMT.flagstat")                                     , emit: "nomt_flagstat"
         path("*.noMT.idxstats")                                     , emit: "nomt_idxstats"
         
         tuple val(id), path("*.noMT.noBL.bam")                      , emit: "nomt_nobl_bam"
-        tuple val(id), path("*.noMT.noBL.bai")                      , emit: "nomt_nobl_bai"
+        tuple val(id), path("*.noMT.noBL.bam.bai")                      , emit: "nomt_nobl_bai"
         path("*.noMT.noBL.flagstat")                                , emit: "nomt_nobl_flagstat"
         path("*.noMT.noBL.idxstats")                                , emit: "nomt_nobl_idxstats"
 
         tuple val(id), path("*.noMT.noBL.dupMarked.bam")            , emit: "dupmarked_bam"
-        tuple val(id), path("*.noMT.noBL.dupMarked.bai")            , emit: "dupmarked_bai"
+        tuple val(id), path("*.noMT.noBL.dupMarked.bam.bai")            , emit: "dupmarked_bai"
         path("*.noMT.noBL.dupMarked.flagstat")                      , emit: "nomt_nobl_dupmarked_flagstat"
         path("*.noMT.noBL.dupMarked.idxstats")                      , emit: "nomt_nobl_dupmarked_idxstats"        
 
