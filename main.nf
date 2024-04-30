@@ -213,6 +213,8 @@ workflow BTPAIRED {
                                 .map({ it -> it[1]}).collect()
                                 .view()
 
+        
+
         MACS2ALL(ch_atac_bams_all, ch_bg , ch_qval, ch_fe, ch_gsize)
 
         }
