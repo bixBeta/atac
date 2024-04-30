@@ -54,8 +54,8 @@ process MTBLKDUP {
     publishDir "STATS",        mode: "symlink", overwrite: true, pattern: "*stat*"
  
     input:
-        tuple val(id), path(primaryBam)
-        tuple val(id), path(primaryBai)
+        tuple val(id), path(primary_bam)
+        tuple val(id), path(primary_bai)
         path(blacklist)
 
     output:
@@ -79,7 +79,7 @@ process MTBLKDUP {
     script:
 
         """
-            samtools view -H $primaryBam | cut -f2 | grep 'SN:' |  cut -d ':' -f2 | grep -v 'MT\|_\|\.' | xargs samtools view -b ${primaryBam} > ${id}.noMT.bam
+            `samtools view -H ${primary_bam} | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b ${primary_bam}` > ${id}.noMT.bam
 
             samtools index ${id}.noMT.bam
             samtools flagstat ${id}.noMT.bam > ${id}.noMT.flagstat
