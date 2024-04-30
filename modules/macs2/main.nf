@@ -65,9 +65,9 @@ process MACS2ALL {
 
         output:
 
-            tuple val(id), path("*narrowPeak")
-            tuple val(id), path("*_peaks.xls")
-            tuple val(id), path("*_summits.bed")
+            path("*narrowPeak")
+            path("*_peaks.xls")
+            path("*_summits.bed")
         
         script:
 
