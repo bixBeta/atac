@@ -20,9 +20,9 @@ process MACS2 {
 
         output:
 
-            tuple val(id), path("*narrowPeak")
-            tuple val(id), path("*_peaks.xls")
-            tuple val(id), path("*_summits.bed")
+            tuple val(id), path("*narrowPeak")                  , emit: "narrow_peaks"
+            tuple val(id), path("*_peaks.xls")                  , emit: "peaks_xls"
+            tuple val(id), path("*_summits.bed")                , emit: "summits_bed"
         
         script:
 
@@ -65,9 +65,9 @@ process MACS2ALL {
 
         output:
 
-            path("*narrowPeak")
-            path("*_peaks.xls")
-            path("*_summits.bed")
+            path("*narrowPeak")                                 , emit: "all_narrow_peaks"
+            path("*_peaks.xls")                                 , emit: "all_peaks_xls"
+            path("*_summits.bed")                               , emit: "all_summits_bed"
         
         script:
 
