@@ -46,7 +46,7 @@ process MACS2 {
 process MACS2ALL {
         
         maxForks 8
-        tag "$id"
+        tag "allSamplesMergedPeakset"
         label "process_medium"
 
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*narrowPeak"
