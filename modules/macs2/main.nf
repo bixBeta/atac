@@ -104,7 +104,7 @@ process FRIP {
 
     input:
         tuple val(id), path(dedup_bam)
-        val(saf)
+        path(saf)
 
 
     output:
