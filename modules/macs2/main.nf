@@ -71,8 +71,9 @@ process MACS2ALL {
         
         script:
 
+            b = atac_bam.join(' ')
             """
-                macs2 callpeak -t ${atac_bam} \\
+                macs2 callpeak -t ${b} \\
                     -f BAMPE \\
                     -n allSamplesMergedPeakset \\
                     -g ${gsize} \\
