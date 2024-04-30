@@ -148,6 +148,7 @@ include {    MACS2     } from './modules/macs2'
 include {    MACS2ALL  } from './modules/macs2'
 include {    FRIP      } from './modules/macs2'
 include {    MQC       } from './modules/multiqc'
+include {    MQC2      } from './modules/multiqc'
  
 
 
@@ -242,8 +243,12 @@ workflow BTPAIRED {
                         .collect()
                     //    .view()
 
-        MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
+        ch2_mqc = FRIPS.out.raw_counts
+                    .collect()
 
+        MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
+        MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
+    
     }
 
 }
