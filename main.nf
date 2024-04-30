@@ -176,7 +176,8 @@ workflow BTPAIRED {
         MTBLKDUP(BOWTIE2.out.primary_sorted_bam, 
                  BOWTIE2.out.primary_sorted_bai,
                  ch_blkList)
-
+        
+        TAGDIR(BOWTIE2.out.dedup_bam)
     }
 
     if( params.genome != null ){
