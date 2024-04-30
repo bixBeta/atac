@@ -191,7 +191,7 @@ workflow BTPAIRED {
 
         ch_dedup_bams = MTBLKDUP.out.dedup_bam
                          .view()
-    }
+    
 
     if (params.bg != null ){
 
@@ -208,7 +208,7 @@ workflow BTPAIRED {
 
     }
 
-
+    }
 
     if( params.genome != null ){
 
