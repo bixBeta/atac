@@ -243,7 +243,7 @@ workflow BTPAIRED {
                         .collect()
                     //    .view()
 
-        ch2_mqc = FRIPS.out.raw_counts
+        ch2_mqc = FRIP.out.raw_counts
                     .collect()
 
         MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
