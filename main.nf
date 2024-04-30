@@ -97,8 +97,8 @@ dm6             :"/workdir/tools/blacklists/dm6-blacklist.v2.bed"
 
 gSize = [
 
-mm10            :"mm"
-hg38            :"hs"
+mm10            :"mm",
+hg38            :"hs",
 dm6             :"dm"
 
 ]
