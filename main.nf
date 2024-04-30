@@ -145,6 +145,7 @@ include {    BOWTIE2   } from './modules/bowtie2'
 include {    MTBLKDUP  } from './modules/bowtie2'
 include {    TAGDIR    } from './modules/homer'
 include {    MACS2     } from './modules/macs2'
+include {    MACS2ALL  } from './modules/macs2'
 include {    MQC       } from './modules/multiqc'
  
 
@@ -189,6 +190,7 @@ workflow BTPAIRED {
         
         TAGDIR(MTBLKDUP.out.dedup_bam)
 
+        if(params.bg != null){
         ch_dedup_bams = MTBLKDUP.out.dedup_bam
                          .view()
     
@@ -206,6 +208,14 @@ workflow BTPAIRED {
 
         MACS2(ch_atac_bams, ch_bg , ch_qval, ch_fe, ch_gsize)
 
+
+        ch_atac_bams_all = ch_atac_bams
+                                .map({ it -> it[1]}).collect()
+                                .view()
+
+        MACS2ALL(ch_atac_bams_all, ch_bg , ch_qval, ch_fe, ch_gsize)
+
+        }
 
 
     }
