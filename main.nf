@@ -134,6 +134,8 @@ if( params.listGenomes) {
 
 include {    FASTP     } from './modules/fastp'
 include {    BOWTIE2   } from './modules/bowtie2'
+include {    MTBLKDUP  } from './modules/bowtie2'
+
 include {    MQC       } from './modules/multiqc'
  
 
@@ -171,6 +173,10 @@ workflow BTPAIRED {
 
         BOWTIE2(fastp_out, ch_genome)
 
+        MTBLKDUP(BOWTIE2.out.primary_sorted_bam, 
+                 BOWTIE2.out.primary_sorted_bai,
+                 ch_blkList)
+
     }
 
     if( params.genome != null ){
@@ -178,6 +184,10 @@ workflow BTPAIRED {
         ch1_mqc = BOWTIE2.out.primary_log
                         .concat(BOWTIE2.out.primary_flagstat)
                         .concat(BOWTIE2.out.primary_idxstats)
+                        .concat(MTBLKDUP.out.nomt_flagstat)
+                        .concat(MTBLKDUP.out.nomt_idxstats)
+                        .concat(MTBLKDUP.out.nomt_nobl_dupmarked_flagstat)
+                        .concat(MTBLKDUP.out.nomt_nobl_dupmarked_idxstats)
                         .collect()
                         .view()
 
