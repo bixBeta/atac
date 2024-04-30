@@ -223,6 +223,13 @@ workflow BTPAIRED {
 
         FRIP(ch_atac_bams, ch_saf)
 
+        ch2_mqc = FRIP.out.raw_counts
+            .collect()
+            .view()
+
+        MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
+    
+
         }
 
 
@@ -247,12 +254,6 @@ workflow BTPAIRED {
         MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
 
 
-        ch2_mqc = FRIP.out.raw_counts
-                    .collect()
-                    .view()
-
-        //MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
-    
     }
 
 }
