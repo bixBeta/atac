@@ -109,7 +109,7 @@ process FRIP {
 
     output:
 
-        path("*.primary.idxstats")                              , emit: "primary_idxstats"
+        path("*readCountInPeaks.txt")                              , emit: "raw_counts"
 
     script:
 
