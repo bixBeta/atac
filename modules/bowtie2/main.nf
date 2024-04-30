@@ -91,14 +91,14 @@ process MTBLKDUP {
             samtools flagstat ${id}.noMT.noBL.bam > ${id}.noMT.noBL.flagstat
             samtools idxstats ${id}.noMT.noBL.bam > ${id}.noMT.noBL.idxstats
 
-            java -jar /myBin/picard.jar \
-                    MarkDuplicates \
-                    INPUT=${id}.noMT.noBL.bam \
-                    OUTPUT=${id}.noMT.noBL.dupMarked.bam \
-                    ASSUME_SORTED=true \
-                    REMOVE_DUPLICATES=false \
-                    METRICS_FILE=${id}.MarkDuplicates.metrics.txt \
-                    VALIDATION_STRINGENCY=LENIENT \
+            java -jar /myBin/picard.jar \\
+                    MarkDuplicates \\
+                    INPUT=${id}.noMT.noBL.bam \\
+                    OUTPUT=${id}.noMT.noBL.dupMarked.bam \\
+                    ASSUME_SORTED=true \\
+                    REMOVE_DUPLICATES=false \\
+                    METRICS_FILE=${id}.MarkDuplicates.metrics.txt \\
+                    VALIDATION_STRINGENCY=LENIENT \\
                     TMP_DIR=tmp
 
             samtools index ${id}.noMT.noBL.dupMarked.bam
