@@ -52,7 +52,7 @@ process MACS2ALL {
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*narrowPeak"
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*_peaks.xls"
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*_summits.bed"
-
+        publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*saf"
         
 
         input:
@@ -69,6 +69,7 @@ process MACS2ALL {
             path("*_peaks.xls")                                 , emit: "all_peaks_xls"
             path("*_summits.bed")                               , emit: "all_summits_bed"
             path("*.saf")                                       , emit: "saf"
+            
         script:
 
             b = atac_bam.join(' ')
