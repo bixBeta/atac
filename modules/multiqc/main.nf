@@ -4,7 +4,7 @@ process MQC {
 
     label 'process_mqc'
     
-    publishDir "Reports", mode: "move", overwrite: true
+    publishDir "Reports", mode: "symlink", overwrite: true, pattern: "html"
     
     input:
 
@@ -32,7 +32,7 @@ process MQC2 {
 
     label 'process_mqc'
     
-    publishDir "Reports", mode: "move", overwrite: true
+    publishDir "Reports", mode: "symlink", overwrite: true, pattern: "*html"
 
     input:
 
