@@ -12,8 +12,11 @@ process MACS2 {
 
         input:
 
-            tuple val(id), path(atac_bams)
-            val(bg_control) from params.input ? Channel.fromPath(params.input) : Channel.empty()
+            tuple val(id), path(atac_bam)
+            tuple val(id2), path(bg_control)
+            val(qval)
+            val(fecutoff)
+            val(gsize) 
 
         output:
 
@@ -22,5 +25,19 @@ process MACS2 {
             tuple val(id), path("*_summits.bed")
         
         script:
+
+            """
+                macs2 callpeak -t ${atac_bam} \\
+                    -f BAMPE \\
+                    -n ${id} \\
+                    -g ${gsize} \\
+                    -q ${qval} \\
+                    --nomodel --shift 37 --ext 73 \\
+                    --fe-cutoff ${fecutoff} \\
+                    --keep-dup all \\
+                    --nolambda \\
+                    -c ${bg_control}
+
+            """
 
 }

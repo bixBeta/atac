@@ -17,7 +17,7 @@ params.id               = "TREx_ID"
 params.fecutoff         = 5
 params.qval             = 0.05
 params.genome           = null
-
+params.bg               = null
 
 
 // Command Line Channels     ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ 
@@ -95,6 +95,14 @@ dm6             :"/workdir/tools/blacklists/dm6-blacklist.v2.bed"
 
 ]
 
+gSize = [
+
+mm10            :"mm"
+hg38            :"hs"
+dm6             :"dm"
+
+]
+
 if( params.listGenomes) {
     
     println("")
@@ -136,6 +144,7 @@ include {    FASTP     } from './modules/fastp'
 include {    BOWTIE2   } from './modules/bowtie2'
 include {    MTBLKDUP  } from './modules/bowtie2'
 include {    TAGDIR    } from './modules/homer'
+include {    MACS2     } from './modules/macs2'
 include {    MQC       } from './modules/multiqc'
  
 
@@ -168,6 +177,7 @@ workflow BTPAIRED {
     ch_alias    = channel.value(gAlias[params.genome])
     ch_gtf      = channel.value(gtfs[params.genome])
     ch_blkList  = channel.value(blkList[params.genome])
+    ch_gsize  = channel.value(gSize[params.genome])
 
     if( params.bowtie2){
 
@@ -183,6 +193,23 @@ workflow BTPAIRED {
                          .view()
     }
 
+    if (params.bg != null ){
+
+        ch_bg = ch_dedup_bams
+                    .filter{ it[0] == params.bg}
+        
+        ch_bg_val = channel.value(ch_bg)
+
+        ch_atac_bams = ch_dedup_bams
+                            .filter{ it[0] != params.bg}
+
+
+        MACS2(ch_atac_bams, ch_bg_val, ch_qval, ch_fe, ch_gsize)
+
+    }
+
+
+
     if( params.genome != null ){
 
         ch1_mqc = BOWTIE2.out.primary_log
@@ -196,7 +223,7 @@ workflow BTPAIRED {
                         .concat(MTBLKDUP.out.dedup_flagstat)
                         .concat(MTBLKDUP.out.dedup_idxstats)
                         .collect()
-                        .view()
+                    //    .view()
 
         MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
 
