@@ -91,3 +91,32 @@ process MACS2ALL {
 
 }
 
+
+
+process FRIP {
+
+    maxForks 8
+    tag "$id"
+    label "process_high"
+
+    publishDir "rawCounts",     mode: "symlink", overwrite: true, pattern: "*.readCountInPeaks.txt"
+
+
+    input:
+        tuple val(id), path(dedup_bam)
+        val(saf)
+
+
+    output:
+
+        path("*.primary.idxstats")                              , emit: "primary_idxstats"
+
+    script:
+
+        """
+            featureCounts -p -a ${saf} -F SAF -o "${id}".readCountInPeaks.txt ${dedup_bam}
+
+        """
+
+
+}

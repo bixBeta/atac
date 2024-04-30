@@ -213,9 +213,13 @@ workflow BTPAIRED {
                                 .map({ it -> it[1]}).collect()
                                 .view()
 
-        
+
 
         MACS2ALL(ch_atac_bams_all, ch_bg , ch_qval, ch_fe, ch_gsize)
+
+        ch_saf = MACS2ALL.out.saf.collect().view()
+
+        FRIP(ch_atac_bams, ch_saf)
 
         }
 
