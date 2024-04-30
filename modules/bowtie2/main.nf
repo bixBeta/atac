@@ -74,6 +74,7 @@ process MTBLKDUP {
         path("*.noMT.noBL.dupMarked.flagstat")                      , emit: "nomt_nobl_dupmarked_flagstat"
         path("*.noMT.noBL.dupMarked.idxstats")                      , emit: "nomt_nobl_dupmarked_idxstats"        
 
+        path("*.MarkDuplicates.metrics.txt")                        , emit: "tmp_dup_stats"
         path("*.renamed.MarkDuplicates.metrics.txt")                , emit: "dup_stats"
 
     script:
