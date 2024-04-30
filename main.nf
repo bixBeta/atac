@@ -195,6 +195,8 @@ workflow BTPAIRED {
 
         ch_bg = ch_dedup_bams
                     .filter{ it[0] == params.bg}
+                    .collect()
+                    .view()
         
         //ch_bg_val = channel.value(ch_bg)
 
