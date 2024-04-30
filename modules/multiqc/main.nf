@@ -12,7 +12,7 @@ process MQC {
         path(logo)             
 
     output:
-        path "*html"                    , emit: mqc_out  
+        path "*html"                    , emit: "mqc_out"  
 
     when:
         
@@ -39,7 +39,7 @@ process MQC2 {
         path(logo)             
 
     output:
-        path "*html"                    , emit: mqc2_out  
+        path "*html"                    , emit: "mqc2_out"  
 
     when:
         

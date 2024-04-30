@@ -245,6 +245,7 @@ workflow BTPAIRED {
 
         ch2_mqc = FRIP.out.raw_counts
                     .collect()
+                    .view()
 
         MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
         MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
