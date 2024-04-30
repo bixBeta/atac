@@ -198,13 +198,13 @@ workflow BTPAIRED {
         ch_bg = ch_dedup_bams
                     .filter{ it[0] == params.bg}
         
-        ch_bg_val = channel.value(ch_bg)
+        //ch_bg_val = channel.value(ch_bg)
 
         ch_atac_bams = ch_dedup_bams
                             .filter{ it[0] != params.bg}
 
 
-        MACS2(ch_atac_bams, ch_bg_val, ch_qval, ch_fe, ch_gsize)
+        MACS2(ch_atac_bams, ch_bg , ch_qval, ch_fe, ch_gsize)
 
     }
 
