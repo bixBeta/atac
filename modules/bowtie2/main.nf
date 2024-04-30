@@ -79,7 +79,7 @@ process MTBLKDUP {
     script:
 
         """
-            samtools view -H ${primary_bam} | xargs cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b ${primary_bam} > ${id}.noMT.bam
+            samtools view -H ${primary_bam} \| cut -f2 | grep "SN:" \|  cut -d ":" -f2 \| grep -v "MT\|_\|\." \| xargs samtools view -b ${primary_bam} > ${id}.noMT.bam
 
             samtools index ${id}.noMT.bam
             samtools flagstat ${id}.noMT.bam > ${id}.noMT.flagstat
