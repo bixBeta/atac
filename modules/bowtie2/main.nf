@@ -75,7 +75,7 @@ process MTBLKDUP {
         path("*.noMT.noBL.dupMarked.idxstats")                      , emit: "nomt_nobl_dupmarked_idxstats"        
 
         path("*.MarkDuplicates.metrics.txt")                        , emit: "tmp_dup_stats"
-       // path("*.renamed.MarkDuplicates.metrics.txt")                , emit: "dup_stats"
+        path("*.renamed.MarkDuplicates.metrics.txt")                , emit: "dup_stats"
 
     script:
 
@@ -102,6 +102,8 @@ process MTBLKDUP {
                     METRICS_FILE=${id}.MarkDuplicates.metrics.txt \\
                     VALIDATION_STRINGENCY=LENIENT \\
                     TMP_DIR=tmp
+
+            sed "s\/${id}.noMT.noBL.bam/${id}.noMT.noBL.dupMarked.bam\/g" ${id}.MarkDuplicates.metrics.txt   > ${id}.renamed.MarkDuplicates.metrics.txt 
 
 
             samtools index ${id}.noMT.noBL.dupMarked.bam
