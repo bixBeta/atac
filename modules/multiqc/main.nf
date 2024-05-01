@@ -49,7 +49,7 @@ process MQC2 {
 
     """
        export  MQC_GENOME=${mqcgenome} 
-       multiqc -n ${params.id}_bt2_FRIP.multiqc.report --config ${conf} --cl-config "custom_logo: ${logo}" .
+       multiqc -n ${params.id}_FRIP.multiqc.report --config ${conf} --cl-config "custom_logo: ${logo}" .
 
     """
 

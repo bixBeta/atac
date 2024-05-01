@@ -227,7 +227,7 @@ workflow BTPAIRED {
             .collect()
             .view()
 
-        MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
+        //MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
     
 
         }
@@ -248,7 +248,7 @@ workflow BTPAIRED {
                         .concat(MTBLKDUP.out.dedup_flagstat)
                         .concat(MTBLKDUP.out.dedup_idxstats)
                         .collect()
-                    //    .view()
+                        .view()
 
 
         MQC(ch1_mqc, ch_mqc_conf, ch_mqc_logo)
