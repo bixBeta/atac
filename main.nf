@@ -42,6 +42,7 @@ Usage:
     nextflow run https://github.com/bixbeta/atac -r main < args ... >
 
 Args:
+    * --help           : Prints this help documentation
     * --listGenomes    : Get extended list of genomes available for this pipeline
     * --id             : TREx Project ID 
     * --sheet          : sample-sheet.csv < default: looks for a file named sample-sheet.csv in the project dir >
@@ -59,7 +60,6 @@ Args:
     * --bowtie2     : invokes bowtie2 alignment step
     * --fastp       : invokes fastp trimming
     * --mode        : PE (default)
-    * --id          : TREX_ID
     * --fecutoff    : 5 (default)
     * --qval        : 0.05 (default)
     * --genome      : reference genome ( Available genomes: hg38, mm10 & dm6 : Use --listGenomes for more details )
