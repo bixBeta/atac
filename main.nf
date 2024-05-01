@@ -55,6 +55,15 @@ Args:
         .
         . etc.
         -------------------------------------------
+    * --bwa         : deprecated
+    * --bowtie2     : invokes bowtie2 alignment step
+    * --fastp       : invokes fastp trimming
+    * --mode        : PE (default)
+    * --id          : TREX_ID
+    * --fecutoff    : 5 (default)
+    * --qval        : 0.05 (default)
+    * --genome      : reference genome ( Available genomes: hg38, mm10 & dm6 : Use --listGenomes for more details )
+    * --bg          : Input Control Sample ID 
 
 """
 
