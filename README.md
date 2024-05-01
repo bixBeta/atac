@@ -26,3 +26,5 @@ Use the following command to ensure the usage of the latest version of the pipel
 nextflow pull https://github.com/bixbeta/atac -r main 
 ```
 <hr>
+
+![](DAG/DAG.png)
