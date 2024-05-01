@@ -4,9 +4,9 @@ process MACS2 {
         tag "$id"
         label "process_medium"
 
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*narrowPeak"
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*_peaks.xls"
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*_summits.bed"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*narrowPeak"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*_peaks.xls"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*_summits.bed"
 
         
 
@@ -49,11 +49,11 @@ process MACS2ALL {
         tag "allSamplesMergedPeakset"
         label "process_medium"
 
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*narrowPeak"
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*_peaks.xls"
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*_summits.bed"
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "*saf"
-        publishDir "MACS2_peaks",            mode: "move", overwrite: true, pattern: "allSamplesMergedPeakset.Annotated.saf"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*narrowPeak"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*_peaks.xls"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*_summits.bed"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "*saf"
+        publishDir "MACS2_peaks",            mode: "copy", overwrite: true, pattern: "allSamplesMergedPeakset.Annotated.saf"
 
         input:
 
@@ -105,7 +105,7 @@ process FRIP {
     tag "$id"
     label "process_high"
 
-    publishDir "rawCounts",     mode: "symlink", overwrite: true, pattern: "*.readCountInPeaks.txt"
+    publishDir "rawCounts",     mode: "copy", overwrite: true, pattern: "*.readCountInPeaks.txt"
 
 
     input:
