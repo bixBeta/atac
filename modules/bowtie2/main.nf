@@ -52,7 +52,7 @@ process MTBLKDUP {
     label "process_medium"
 
     publishDir "STATS",             mode: "symlink", overwrite: true, pattern: "*stat*"
-    publishDir "DEDUP_BAMS",        mode: "symlink", overwrite: true, pattern: "*DEDUP.bam*"
+    publishDir "DEDUP_BAMS",        mode: "copy", overwrite: true, pattern: "*DEDUP.bam*"
 
     input:
         tuple val(id), path(primary_bam)
