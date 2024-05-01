@@ -110,7 +110,8 @@ process FRIP {
     output:
 
         path("*readCountInPeaks.txt")                              , emit: "raw_counts"
-
+        path("*readCountInPeaks.txt.summary")                      , emit: "raw_counts_summary"
+        
     script:
 
         """

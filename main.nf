@@ -223,7 +223,7 @@ workflow BTPAIRED {
 
         FRIP(ch_atac_bams, ch_saf)
 
-        ch2_mqc = FRIP.out.raw_counts
+        ch2_mqc = FRIP.out.raw_counts_summary
             .collect()
             .view()
 

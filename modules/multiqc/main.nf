@@ -49,7 +49,9 @@ process MQC2 {
 
     """
        export  MQC_GENOME=${mqcgenome} 
-       multiqc -n ${params.id}_FRIP.multiqc.report --config ${conf} --cl-config "custom_logo: ${logo}" .
+       multiqc -n ${params.id}_FRIP.multiqc.report --config ${conf} \\
+            --cl-config "custom_logo: ${logo}" -m featureCounts \\
+            -b "Please note that the featureCounts M Assigned Column refers to Fragments and Not Reads" .
 
     """
 
