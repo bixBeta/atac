@@ -53,7 +53,7 @@ process MACS2ALL {
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*_peaks.xls"
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*_summits.bed"
         publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "*saf"
-        
+        publishDir "MACS2_peaks",            mode: "symlink", overwrite: true, pattern: "allSamplesMergedPeakset.Annotated.saf"
 
         input:
 
@@ -62,14 +62,17 @@ process MACS2ALL {
             val(qval)
             val(fecutoff)
             val(gsize) 
+            val(genome)
+            val(gtf)
 
         output:
 
             path("*narrowPeak")                                 , emit: "all_narrow_peaks"
             path("*_peaks.xls")                                 , emit: "all_peaks_xls"
             path("*_summits.bed")                               , emit: "all_summits_bed"
-            path("*.saf")                                       , emit: "saf"
-            
+            path("*allSamplesMergedPeakset.saf")                , emit: "saf"
+            path("*allSamplesMergedPeakset.Annotated.saf")      , emit: "ann_saf"
+
         script:
 
             b = atac_bam.join(' ')
@@ -86,6 +89,9 @@ process MACS2ALL {
                     -c ${bg_control}
 
             awk 'BEGIN{FS=OFS="\\t"; print "GeneID\\tChr\\tStart\\tEnd\\tStrand"}{print \$4, \$1, \$2+1, \$3, "."}' allSamplesMergedPeakset_peaks.narrowPeak > allSamplesMergedPeakset.saf
+
+            annotatePeaks.pl allSamplesMergedPeakset.saf ${genome} -gtf ${gtf} > allSamplesMergedPeakset.Annotated.saf    
+
 
             """
 
@@ -111,7 +117,7 @@ process FRIP {
 
         path("*readCountInPeaks.txt")                              , emit: "raw_counts"
         path("*readCountInPeaks.txt.summary")                      , emit: "raw_counts_summary"
-        
+
     script:
 
         """
@@ -121,3 +127,5 @@ process FRIP {
 
 
 }
+
+

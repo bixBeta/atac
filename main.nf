@@ -217,7 +217,7 @@ workflow BTPAIRED {
 
 
 
-        MACS2ALL(ch_atac_bams_all, ch_bg , ch_qval, ch_fe, ch_gsize)
+        MACS2ALL(ch_atac_bams_all, ch_bg , ch_qval, ch_fe, ch_gsize, ch_genome, ch_gtf)
 
         ch_saf = MACS2ALL.out.saf.collect().view()
 
