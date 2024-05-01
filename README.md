@@ -1,4 +1,5 @@
 # Nextflow Pipeline for ATAC-seq runs on GG02 
+![](img/trex-mini.png)
 
 <hr>
 
