@@ -28,7 +28,10 @@ nextflow pull https://github.com/bixbeta/atac -r main
 <hr>
 
 <details>
-  <summary> DAG 
-    ![](DAG/DAG.png)
-</summary>
+
+<summary> DAG </summary>
+
+![](DAG/DAG.png)
+    
+
 </details>
