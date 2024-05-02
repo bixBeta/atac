@@ -1,5 +1,5 @@
 # Nextflow Pipeline for ATAC-seq runs on GG02 
-![](img/trex-mini.png)
+[![](img/trex-mini.png)](https://trex.biotech.cornell.edu/)
 
 <hr>
 
