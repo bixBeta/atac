@@ -112,6 +112,15 @@ dm6             :"dm"
 
 ]
 
+bwgSize = [
+
+mm10            :2652783500,
+hg38            :2913022398,
+dm6             :142573017
+
+]
+
+
 if( params.listGenomes) {
     
     println("")
@@ -189,7 +198,8 @@ workflow BTPAIRED {
     ch_alias    = channel.value(gAlias[params.genome])
     ch_gtf      = channel.value(gtfs[params.genome])
     ch_blkList  = channel.value(blkList[params.genome])
-    ch_gsize  = channel.value(gSize[params.genome])
+    ch_gsize    = channel.value(gSize[params.genome])
+    ch_bwg_size = channel.value(bwgSize[params.genome])
 
     if( params.bowtie2){
 
@@ -200,6 +210,8 @@ workflow BTPAIRED {
                  ch_blkList)
         
         TAGDIR(MTBLKDUP.out.dedup_bam)
+
+        BIGWIG(MTBLKDUP.out.dedup_bam, ch_bwg_size)
 
         if(params.bg != null){
         ch_dedup_bams = MTBLKDUP.out.dedup_bam
