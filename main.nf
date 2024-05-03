@@ -166,6 +166,7 @@ include {    MACS2     } from './modules/macs2'
 include {    MACS2ALL  } from './modules/macs2'
 include {    FRIP      } from './modules/macs2'
 include {    BIGWIG    } from './modules/deeptools'
+include {    RSYNC     } from './modules/deeptools'
 include {    MQC       } from './modules/multiqc'
 include {    MQC2      } from './modules/multiqc'
  
