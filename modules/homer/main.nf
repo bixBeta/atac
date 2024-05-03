@@ -15,7 +15,7 @@ process TAGDIR {
     output:
 
         tuple val(id), path("*.tag.dir")                 , emit: "tag_dir"
-        path("${id}.tag.dir/*.ucsc.bg.gz")                              , emit: "bedgraph"
+        path("${id}.tag.dir/*.ucsc.bg.gz")               , emit: "bedgraph"
 
     script:
 
