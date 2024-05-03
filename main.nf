@@ -214,6 +214,10 @@ workflow BTPAIRED {
 
         BIGWIG(MTBLKDUP.out.dedup_bam, MTBLKDUP.out.dedup_bai, ch_bwg_size)
 
+        RSYNC(BIGWIG.out.big_wig)
+
+        RSYNC.out.ftp_path.collect().view()
+
         if(params.bg != null){
         ch_dedup_bams = MTBLKDUP.out.dedup_bam
                          .view()

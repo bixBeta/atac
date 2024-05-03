@@ -31,3 +31,27 @@ process BIGWIG {
 
 }
 
+
+process RSYNC {
+ 
+    tag "$id"
+    label "process_low"
+
+    input:
+
+        tuple val(id), path(big_wig)     
+
+    output:
+
+        path("ftp.path")                                , emit: "ftp_path"
+        
+    shell:
+        
+        
+        '''
+            rsync -av !{big_wig} fa286@cbsugg.biohpc.cornell.edu:/workdir/ftp/fa286/!{params.id}
+            echo "ftp://cbsuftp.biohpc.cornell.edu/cbsugg/fa286/!{params.id}/!{big_wig}" > ftp.path
+
+        '''
+
+}
