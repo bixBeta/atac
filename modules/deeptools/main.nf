@@ -35,7 +35,7 @@ process BIGWIG {
 process RSYNC {
  
     tag "$id"
-    label "process_low"
+    label "process_rsync"
 
     input:
 
