@@ -212,7 +212,7 @@ workflow BTPAIRED {
         
         TAGDIR(MTBLKDUP.out.dedup_bam)
 
-        BIGWIG(MTBLKDUP.out.dedup_bam, ch_bwg_size)
+        BIGWIG(MTBLKDUP.out.dedup_bam, MTBLKDUP.out.dedup_bai, ch_bwg_size)
 
         if(params.bg != null){
         ch_dedup_bams = MTBLKDUP.out.dedup_bam

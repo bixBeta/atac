@@ -10,6 +10,7 @@ process BIGWIG {
     input:
 
         tuple val(id), path(dedup_bam)
+        tuple val(id), path(dedup_bai)
         val egsize
 
     output:
