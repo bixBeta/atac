@@ -229,7 +229,7 @@ workflow BTPAIRED {
                     .filter{ it[0] == params.bg}
                     .collect()
                     .view()
-                    
+
         } else {
 
             ch_bg = Channel.empty()
@@ -240,6 +240,7 @@ workflow BTPAIRED {
 
         ch_atac_bams = ch_dedup_bams
                             .filter{ it[0] != params.bg}
+                            .view()
 
 
         MACS2(ch_atac_bams, ch_bg , ch_qval, ch_fe, ch_gsize)
