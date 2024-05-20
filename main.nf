@@ -17,7 +17,7 @@ params.id               = "TREx_ID"
 params.fecutoff         = 5
 params.qval             = 0.05
 params.genome           = null
-params.bg               = ''
+params.bg               = null
 
 
 // Command Line Channels     ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~  ~ ~ ~ ~ ~ ~ 
@@ -162,9 +162,9 @@ include {    FASTP     } from './modules/fastp'
 include {    BOWTIE2   } from './modules/bowtie2'
 include {    MTBLKDUP  } from './modules/bowtie2'
 include {    TAGDIR    } from './modules/homer'
-include {    MACS2     } from './modules/macs2'
-include {    MACS2ALL  } from './modules/macs2'
-include {    FRIP      } from './modules/macs2'
+include {    MACS2;    NObgMACS2        } from './modules/macs2'
+include {    MACS2ALL; NObgMACS2ALL     } from './modules/macs2'
+include {    FRIP;     NObgFRIP         } from './modules/macs2'
 include {    BIGWIG    } from './modules/deeptools'
 include {    RSYNC     } from './modules/deeptools'
 include {    MQC       } from './modules/multiqc'
@@ -256,6 +256,29 @@ workflow BTPAIRED {
 
         MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
     
+
+        } else {
+
+            ch_dedup_bams = MTBLKDUP.out.dedup_bam
+                         .view()
+
+            NObgMACS2(ch_dedup_bams, ch_qval, ch_fe, ch_gsize)
+
+            ch_atac_bams_all = ch_atac_bams
+                                .map({ it -> it[1]}).collect()
+                                .view()
+
+            NObgMACS2ALL(ch_atac_bams_all, ch_qval, ch_fe, ch_gsize, ch_genome, ch_gtf)
+
+            ch_saf = NObgMACS2ALL.out.saf.collect().view()
+            
+            NObgFRIP(ch_dedup_bams, ch_saf)
+
+            ch2_mqc = NObgFRIP.out.raw_counts_summary
+                .collect()
+                .view()
+
+            MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
 
         }
 
