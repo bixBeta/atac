@@ -74,11 +74,20 @@ Args:
 
 genomeDir = [
 
-mm10            :"/workdir/genomes/Mus_musculus/mm10/ENSEMBL/bowtie2index/mm10",
-hg38            :"/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/BT2.ENSEMBL_INDEX/",
-dm6             :"/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Bowtie2.Index/dm6"
+mm10            :"/workdir/genomes/Mus_musculus/mm10/ENSEMBL/bowtie2index",
+hg38            :"/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/BT2.ENSEMBL_INDEX",
+dm6             :"/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Bowtie2.Index"
 
 ]
+
+bt2Prefix = [
+
+mm10            :"/mm10",
+hg38            :"/hg38",
+dm6             :"/dm6"
+
+]
+
 
 gAlias = [
 
@@ -197,6 +206,9 @@ workflow BTPAIRED {
     genome = genomeDir[params.genome]
     ch_genome   = channel.value(genome)
 
+    genome_prefix = bt2Prefix[params.genome]
+    ch_genome_prefix = channel.value(genome_prefix)
+
     ch_alias    = channel.value(gAlias[params.genome])
     ch_gtf      = channel.value(gtfs[params.genome])
     ch_blkList  = channel.value(blkList[params.genome])
@@ -205,7 +217,7 @@ workflow BTPAIRED {
 
     if( params.bowtie2){
 
-        BOWTIE2(fastp_out, ch_genome)
+        BOWTIE2(fastp_out, ch_genome, ch_genome_prefix)
 
         MTBLKDUP(BOWTIE2.out.primary_sorted_bam, 
                  BOWTIE2.out.primary_sorted_bai,
