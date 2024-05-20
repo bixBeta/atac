@@ -232,7 +232,7 @@ workflow BTPAIRED {
 
         } else {
 
-            ch_bg = params.bg.ifEmpty{""}
+            ch_bg = Channel.empty()
         }
 
 
