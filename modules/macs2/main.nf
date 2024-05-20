@@ -169,8 +169,7 @@ process NObgMACS2 {
                     -q ${qval} \\
                     --nomodel --shift 37 --ext 73 \\
                     --fe-cutoff ${fecutoff} \\
-                    --keep-dup all \\
-                    --nolambda 
+                    --keep-dup all 
 
             """
 
@@ -218,8 +217,7 @@ process NObgMACS2ALL {
                     -q ${qval} \\
                     --nomodel --shift 37 --ext 73 \\
                     --fe-cutoff ${fecutoff} \\
-                    --keep-dup all \\
-                    --nolambda 
+                    --keep-dup all 
 
             awk 'BEGIN{FS=OFS="\\t"; print "GeneID\\tChr\\tStart\\tEnd\\tStrand"}{print \$4, \$1, \$2+1, \$3, "."}' allSamplesMergedPeakset_peaks.narrowPeak > allSamplesMergedPeakset.saf
 
