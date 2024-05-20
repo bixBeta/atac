@@ -78,8 +78,8 @@ process MACS2ALL {
         script:
 
             b = atac_bam.join(' ')
-            def BG = bg_control ? "-c ${bg_control}"  : ""
-
+            def BG  = bg_control ? "-c ${bg_control}"  : ""
+            def ID2 = id2 ? ""  : ""
             """
                 macs2 callpeak -t ${b} \\
                     -f BAMPE \\
