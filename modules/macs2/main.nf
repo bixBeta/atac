@@ -25,9 +25,7 @@ process MACS2 {
             tuple val(id), path("*_summits.bed")                , emit: "summits_bed"
         
         script:
-        
-            def BG = bg_control ? "-c ${bg_control}"  : ""
-        
+
             """
                 macs2 callpeak -t ${atac_bam} \\
                     -f BAMPE \\
@@ -38,7 +36,7 @@ process MACS2 {
                     --fe-cutoff ${fecutoff} \\
                     --keep-dup all \\
                     --nolambda \\
-                    ${BG}
+                    -c ${bg_control}
 
             """
 
@@ -78,8 +76,6 @@ process MACS2ALL {
         script:
 
             b = atac_bam.join(' ')
-            def BG  = bg_control && id2 ? "-c ${bg_control}"  : ""
-
             """
                 macs2 callpeak -t ${b} \\
                     -f BAMPE \\
@@ -90,7 +86,7 @@ process MACS2ALL {
                     --fe-cutoff ${fecutoff} \\
                     --keep-dup all \\
                     --nolambda \\
-                    ${BG}
+                    -c ${bg_control}
 
             awk 'BEGIN{FS=OFS="\\t"; print "GeneID\\tChr\\tStart\\tEnd\\tStrand"}{print \$4, \$1, \$2+1, \$3, "."}' allSamplesMergedPeakset_peaks.narrowPeak > allSamplesMergedPeakset.saf
 

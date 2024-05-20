@@ -219,28 +219,20 @@ workflow BTPAIRED {
 
         // RSYNC.out.ftp_path.collect().view()
 
-        
+        if(params.bg != null){
         ch_dedup_bams = MTBLKDUP.out.dedup_bam
                          .view()
     
-        if(params.bg){
 
-            ch_bg = ch_dedup_bams
+        ch_bg = ch_dedup_bams
                     .filter{ it[0] == params.bg}
                     .collect()
                     .view()
-
-        } else {
-
-            ch_bg = ['', '/']
-        }
-
-
+        
         //ch_bg_val = channel.value(ch_bg)
 
         ch_atac_bams = ch_dedup_bams
                             .filter{ it[0] != params.bg}
-                            .view()
 
 
         MACS2(ch_atac_bams, ch_bg , ch_qval, ch_fe, ch_gsize)
@@ -265,7 +257,7 @@ workflow BTPAIRED {
         MQC2(ch2_mqc, ch_mqc_conf, ch_mqc_logo)
     
 
-        
+        }
 
 
     }
