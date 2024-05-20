@@ -264,7 +264,7 @@ workflow BTPAIRED {
 
             NObgMACS2(ch_dedup_bams, ch_qval, ch_fe, ch_gsize)
 
-            ch_atac_bams_all = ch_atac_bams
+            ch_atac_bams_all = ch_dedup_bams
                                 .map({ it -> it[1]}).collect()
                                 .view()
 
